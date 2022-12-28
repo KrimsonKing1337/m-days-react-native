@@ -1,6 +1,12 @@
+import { useEffect, useState } from 'react';
 import { Text, useWindowDimensions } from 'react-native';
+
 import styled from 'styled-components/native';
+
 import { getFontSizePx } from 'utils/getFontSize';
+import { twoDigitsAlways } from 'utils/twoDigitsAlways';
+
+import { getValues } from './utils';
 
 const Wrapper = styled.View`
   user-select: none;
@@ -116,12 +122,48 @@ const PercentFull = styled.Text`
   color: #fff;
 `;
 
+let interval: ReturnType<typeof setInterval> | null = null;
+
 export default function ProgressBar() {
+  const initValues = getValues();
+
   const { width, height } = useWindowDimensions();
+  const [values, setValues] = useState(initValues);
+
+  useEffect(() => {
+    interval = setInterval(() => {
+      const newValues = getValues();
+
+      setValues(newValues);
+    }, 100);
+
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, []);
+
+  const {
+    year,
+    day,
+    monthText,
+    hours,
+    minutes,
+    seconds,
+    progressFull,
+    dayCount,
+    daysInYear,
+    progressShort,
+  } = values;
+
+  const hoursToPrint = twoDigitsAlways(hours);
+  const minutesToPrint = twoDigitsAlways(minutes);
+  const secondsToPrint = twoDigitsAlways(seconds);
 
   return (
     <Wrapper>
-      <Text style={{position: 'absolute'}}>
+      <Text style={{ position: 'absolute' }}>
         width: {width}
         {'\n'}
         height: {height}
@@ -131,45 +173,45 @@ export default function ProgressBar() {
         <ContentWrapper>
           <Left>
             <Year>
-              2022
+              {year}
             </Year>
 
             <Month>
-              31 December
+              {`${day} ${monthText}`}
             </Month>
           </Left>
 
           <Center>
             <Time>
               <HoursOrMinutes>
-                22:
+                {`${hoursToPrint}:`}
               </HoursOrMinutes>
 
               <HoursOrMinutes>
-                22
+                {minutesToPrint}
               </HoursOrMinutes>
 
               <Seconds>
-                22
+                {secondsToPrint}
               </Seconds>
             </Time>
 
             <Progress>
-              <ProgressWalking style={{width: '50%'}} />
+              <ProgressWalking style={{ width: `${progressFull}%` }} />
             </Progress>
 
             <Day>
-              200 of 365 monochrome&nbsp;days
+              {`${dayCount} of ${daysInYear} monochrome days`}
             </Day>
           </Center>
 
           <Right>
             <Percent>
-              99.34%
+              {`${progressShort}%`}
             </Percent>
 
             <PercentFull>
-              99.3465263%
+              {`${progressFull}%`}
             </PercentFull>
           </Right>
         </ContentWrapper>
