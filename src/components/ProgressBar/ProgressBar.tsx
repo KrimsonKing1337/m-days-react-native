@@ -5,21 +5,17 @@ const Wrapper = styled.View`
 `;
 
 const Shadow = styled.View`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   height: 100%;
   width: 100%;
   background: rgba(0, 0, 0, 0.4);
-  position: relative;
-  z-index: 1;
-  border: 1px red solid;
 `;
 
 const ContentWrapper = styled.View`
-  position: absolute;
-  margin: auto;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  width: 100%;
   height: 250px;
   max-width: 1200px;
   display: flex;
@@ -35,25 +31,22 @@ const Block = styled.View`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
-  /* > * {
-    flex: 0 0 auto;
-    width: 100%;
-    text-align: center;
-  } */
 `;
 
 const Left = styled(Block)`
-  width: 262px;
+  width: 30%;
+  max-width: 262px;
   flex-shrink: 0;
 `;
 
 const Center = styled(Block)`
   width: 100%;
+  flex-shrink: 1;
 `;
 
 const Right = styled(Block)`
-  width: 262px;
+  width: 30%;
+  max-width: 262px;
   flex-shrink: 0;
 `;
 
@@ -106,11 +99,6 @@ const Seconds = styled.Text`
 `;
 
 const Progress = styled.View`
-  position: relative;
-  z-index: 2;
-`;
-
-const ProgressBg = styled.View`
   width: 100%;
   height: 30px;
   background: #3d3d3d;
@@ -119,7 +107,6 @@ const ProgressBg = styled.View`
 const ProgressWalking = styled.View`
   height: 30px;
   background: #fff;
-  margin-top: -30px;
 `;
 
 const Percent = styled.Text`
@@ -177,8 +164,6 @@ export default function ProgressBar () {
             </Time>
 
             <Progress>
-              <ProgressBg />
-
               <ProgressWalking style={{width: '50%'}} />
             </Progress>
 
