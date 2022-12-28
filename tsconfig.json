@@ -3,6 +3,13 @@
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
     "skipLibCheck": true,
+    "moduleResolution": "node",
+    "target": "es6",
+    "module": "commonjs",
+    "baseUrl": "./",
+    "paths": {
+      "utils/*": ["src/utils/*"],
+    },
     "types": [
       "jest",
       "cypress",

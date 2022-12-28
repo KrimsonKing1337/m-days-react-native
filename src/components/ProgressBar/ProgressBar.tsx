@@ -1,6 +1,6 @@
 import { Text, useWindowDimensions } from 'react-native';
 import styled from 'styled-components/native';
-import { getFontSizePx } from '../../utils/getFontSize';
+import { getFontSizePx } from 'utils/getFontSize';
 
 const Wrapper = styled.View`
   user-select: none;

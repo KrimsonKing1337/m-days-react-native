@@ -1,11 +1,12 @@
-/**
- * Metro configuration for React Native
- * https://github.com/facebook/react-native
- *
- * @format
- */
+const path = require('path');
 
 module.exports = {
+  resolver: {
+    extraNodeModules: {
+      src: path.join(__dirname, './src'),
+      utils: path.join(__dirname, './src/utils'),
+    },
+  },
   transformer: {
     getTransformOptions: async () => ({
       transform: {
