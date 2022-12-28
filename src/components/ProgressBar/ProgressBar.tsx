@@ -10,7 +10,7 @@ const Shadow = styled.View`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   height: 100%;
   width: 100%;
   background: rgba(0, 0, 0, 0.4);
@@ -22,7 +22,7 @@ const ContentWrapper = styled.View`
   max-width: 1200px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-end;
   color: #fff;
   opacity: 0.65;
@@ -36,20 +36,15 @@ const Block = styled.View`
 `;
 
 const Left = styled(Block)`
-  width: 30%;
-  max-width: 262px;
-  flex-shrink: 0;
+  max-width: 30%;
 `;
 
 const Center = styled(Block)`
-  width: 100%;
   flex-shrink: 1;
 `;
 
 const Right = styled(Block)`
-  width: 30%;
-  max-width: 262px;
-  flex-shrink: 0;
+  max-width: 30%;
 `;
 
 const Year = styled.Text`
@@ -58,25 +53,18 @@ const Year = styled.Text`
   color: #fff;
 `;
 
-const MonthWrapper = styled.View`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  background: #020202;
-  margin-top: 15px;
-`;
-
 const Month = styled.Text`
   // font-family: 'Avenir LT Std 35 Light Oblique';
-  font-size: 38px;
-  margin-top: 8px;
+  font-size: ${getFontSizePx(38)};
+  // margin-top: 15px;
+  padding-top: 8px;
   color: #fff;
+  background: #020202;
 `;
 
 const Day = styled.Text`
-  margin-top: 15px;
-  font-size: 38px;
+  // margin-top: 15px;
+  font-size: ${getFontSizePx(38)};
   // font-family: 'Avenir LT Std 35 Light Oblique';
   color: #fff;
 `;
@@ -84,19 +72,21 @@ const Day = styled.Text`
 const Time = styled.View`
   display: flex;
   flex-direction: row;
+  align-items: flex-end;
 `;
 
 const HoursOrMinutes = styled.Text`
   // font-family: 'Avenir LT Std 95 Black Oblique';
-  font-size: 98px;
+  font-size: ${getFontSizePx(98)};
   color: #fff;
 `;
 
 const Seconds = styled.Text`
   // font-family: 'Avenir LT Std 35 Light';
   font-style: italic;
-  font-size: 59px;
+  font-size: ${getFontSizePx(59)};
   padding-left: 10px;
+  top: -5px;
   color: #fff;
 `;
 
@@ -113,23 +103,16 @@ const ProgressWalking = styled.View`
 
 const Percent = styled.Text`
   // font-family: 'Avenir LT Std 95 Black Oblique';
-  font-size: 51px;
+  font-size: ${getFontSizePx(51)};
   color: #fff;
-`;
-
-const PercentFullWrapper = styled.View`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  background: #020202;
-  margin-top: 15px;
 `;
 
 const PercentFull = styled.Text`
   // font-family: 'Avenir LT Std 35 Light Oblique';
-  font-size: 38px;
-  margin-top: 8px;
+  font-size: ${getFontSizePx(38)};
+  background: #020202;
+  // margin-top: 15px;
+  padding-top: 8px;
   color: #fff;
 `;
 
@@ -151,11 +134,9 @@ export default function ProgressBar() {
               2022
             </Year>
 
-            <MonthWrapper>
-              <Month>
-                31.12
-              </Month>
-            </MonthWrapper>
+            <Month>
+              31 December
+            </Month>
           </Left>
 
           <Center>
@@ -184,14 +165,12 @@ export default function ProgressBar() {
 
           <Right>
             <Percent>
-              99%
+              99.34%
             </Percent>
 
-            <PercentFullWrapper>
-              <PercentFull>
-                99.9999999%
-              </PercentFull>
-            </PercentFullWrapper>
+            <PercentFull>
+              99.3465263%
+            </PercentFull>
           </Right>
         </ContentWrapper>
       </Shadow>
