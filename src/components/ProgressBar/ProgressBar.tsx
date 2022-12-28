@@ -1,4 +1,6 @@
+import { Text, useWindowDimensions } from 'react-native';
 import styled from 'styled-components/native';
+import { getFontSizePx } from '../../utils/getFontSize';
 
 const Wrapper = styled.View`
   user-select: none;
@@ -52,7 +54,7 @@ const Right = styled(Block)`
 
 const Year = styled.Text`
   // font-family: 'Avenir LT Std 95 Black Oblique';
-  font-size: 51px;
+  font-size: ${getFontSizePx(51)};
   color: #fff;
 `;
 
@@ -131,9 +133,17 @@ const PercentFull = styled.Text`
   color: #fff;
 `;
 
-export default function ProgressBar () {
+export default function ProgressBar() {
+  const { width, height } = useWindowDimensions();
+
   return (
     <Wrapper>
+      <Text style={{position: 'absolute'}}>
+        width: {width}
+        {'\n'}
+        height: {height}
+      </Text>
+
       <Shadow>
         <ContentWrapper>
           <Left>
@@ -187,4 +197,4 @@ export default function ProgressBar () {
       </Shadow>
     </Wrapper>
   );
-};
+}
