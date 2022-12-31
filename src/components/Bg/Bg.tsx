@@ -19,7 +19,6 @@ export default function Bg() {
   const [imgs, setImgs] = useState<string[]>([]);
   const [img, setImg] = useState('');
 
-  const imgRef = useRef('');
   const imgPrevRef = useRef('');
 
   useEffect(() => {
@@ -41,17 +40,16 @@ export default function Bg() {
       const fileName = imgs[random].substring(imgs[random].lastIndexOf('/'));
       const dest = `${RNFS.CachesDirectoryPath}/${fileName}`;
 
+      await RNFS.copyFileAssets(imgs[random], dest);
+
       if (!imgPrevRef.current) {
         imgPrevRef.current = dest;
       } else {
         await RNFS.unlink(imgPrevRef.current);
 
-        imgPrevRef.current = imgRef.current;
+        imgPrevRef.current = dest;
       }
 
-      await RNFS.copyFileAssets(imgs[random], dest);
-
-      imgRef.current = dest;
       setImg(dest);
     };
 
