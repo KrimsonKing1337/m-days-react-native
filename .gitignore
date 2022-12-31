@@ -63,3 +63,4 @@ buck-out/
 /vendor/bundle/
 
 /src/public/img_bg
+/android/app/src/main/assets

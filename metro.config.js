@@ -5,6 +5,7 @@ module.exports = {
     extraNodeModules: {
       src: path.join(__dirname, './src'),
       utils: path.join(__dirname, './src/utils'),
+      components: path.join(__dirname, './src/components'),
     },
   },
   transformer: {

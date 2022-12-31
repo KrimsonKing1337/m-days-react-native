@@ -1,7 +1,11 @@
-import styled from 'styled-components/native';
-import ProgressBar from '../ProgressBar';
+import RNFS from 'react-native-fs';
+import { useEffect, useRef, useState } from 'react';
 
-const bg = require('../../public/img_bg/1920/0-_t5Je_L9.jpg');
+import styled from 'styled-components/native';
+
+import { randomInt } from 'utils/randomInt';
+
+import ProgressBar from 'components/ProgressBar';
 
 const Wrapper = styled.ImageBackground`
   height: 100%;
@@ -9,9 +13,67 @@ const Wrapper = styled.ImageBackground`
   background: #fff;
 `;
 
+let interval: ReturnType<typeof setInterval> | null = null;
+
 export default function Bg() {
+  const [imgs, setImgs] = useState<string[]>([]);
+  const [img, setImg] = useState('');
+
+  const imgRef = useRef('');
+  const imgPrevRef = useRef('');
+
+  useEffect(() => {
+    (async () => {
+      const images = await RNFS.readDirAssets('img/1920');
+      const paths = images.map(({ path }) => path);
+
+      setImgs(paths);
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (!imgs.length) {
+      return;
+    }
+
+    const imgChange = async () => {
+      const random = randomInt(0, imgs.length);
+      const fileName = imgs[random].substring(imgs[random].lastIndexOf('/'));
+      const dest = `${RNFS.CachesDirectoryPath}/${fileName}`;
+
+      if (!imgPrevRef.current) {
+        imgPrevRef.current = dest;
+      } else {
+        await RNFS.unlink(imgPrevRef.current);
+
+        imgPrevRef.current = imgRef.current;
+      }
+
+      await RNFS.copyFileAssets(imgs[random], dest);
+
+      imgRef.current = dest;
+      setImg(dest);
+    };
+
+    imgChange();
+
+    interval = setInterval(() => {
+      imgChange();
+    }, 12000);
+
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [imgs]);
+
+  if (!img) {
+    return null;
+  }
+
   return (
-    <Wrapper source={bg} resizeMode="cover" style={{bottom: 0}}>
+    <Wrapper source={{uri: `file://${img}`}} resizeMode="cover" style={{bottom: 0}}>
       <ProgressBar />
     </Wrapper>
   );
