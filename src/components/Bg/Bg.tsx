@@ -1,16 +1,22 @@
 import RNFS from 'react-native-fs';
 import { useEffect, useRef, useState } from 'react';
+import { Animated } from 'react-native';
 
 import styled from 'styled-components/native';
 
 import { randomInt } from 'utils/randomInt';
 
 import ProgressBar from 'components/ProgressBar';
+import { playFadeIn, playFadeOut } from './animations';
+
+const AnimationWrapper = styled(Animated.View)`
+  height: 100%;
+  width: 100%;
+`;
 
 const Wrapper = styled.ImageBackground`
   height: 100%;
   width: 100%;
-  background: #fff;
 `;
 
 let interval: ReturnType<typeof setInterval> | null = null;
@@ -20,6 +26,8 @@ export default function Bg() {
   const [img, setImg] = useState('');
 
   const imgPrevRef = useRef('');
+
+  const fadeAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     (async () => {
@@ -50,7 +58,11 @@ export default function Bg() {
         imgPrevRef.current = dest;
       }
 
-      setImg(dest);
+      playFadeOut(fadeAnim, () => {
+        setImg(dest);
+
+        playFadeIn(fadeAnim);
+      });
     };
 
     imgChange();
@@ -64,15 +76,17 @@ export default function Bg() {
         clearInterval(interval);
       }
     };
-  }, [imgs]);
+  }, [imgs, fadeAnim]);
 
   if (!img) {
     return null;
   }
 
   return (
-    <Wrapper source={{uri: `file://${img}`}} resizeMode="cover" style={{bottom: 0}}>
-      <ProgressBar />
-    </Wrapper>
+    <AnimationWrapper style={{opacity: fadeAnim}}>
+      <Wrapper source={{uri: `file://${img}`}} resizeMode="cover" style={{bottom: 0}}>
+        <ProgressBar />
+      </Wrapper>
+    </AnimationWrapper>
   );
 }
