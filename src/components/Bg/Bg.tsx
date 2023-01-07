@@ -9,6 +9,12 @@ import { randomInt } from 'utils/randomInt';
 import ProgressBar from 'components/ProgressBar';
 import { playFadeIn, playFadeOut } from './animations';
 
+const ExtraWrapper = styled.View`
+  position: relative;
+  height: 100%;
+  width: 100%;
+`;
+
 const AnimationWrapper = styled(Animated.View)`
   height: 100%;
   width: 100%;
@@ -83,10 +89,12 @@ export default function Bg() {
   }
 
   return (
-    <AnimationWrapper style={{opacity: fadeAnim}}>
-      <Wrapper source={{uri: `file://${img}`}} resizeMode="cover" style={{bottom: 0}}>
-        <ProgressBar />
-      </Wrapper>
-    </AnimationWrapper>
+    <ExtraWrapper>
+      <AnimationWrapper style={{opacity: fadeAnim}}>
+        <Wrapper source={{uri: `file://${img}`}} resizeMode="cover" style={{bottom: 0}} />
+      </AnimationWrapper>
+
+      <ProgressBar />
+    </ExtraWrapper>
   );
 }
