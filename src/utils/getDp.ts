@@ -7,14 +7,14 @@ import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 // const windowWidth = Dimensions.get('window').width;
 
-export const getFontSize = (n: number, baseWidth = 1080) => {
+export const getDpWithoutSuffix = (n: number, baseWidth = 1080) => {
   const normSize = n / baseWidth * 100;
 
   return wp(normSize);
 };
 
-export const getFontSizePx = (n: number, baseWidth = 1080) => {
-  const fontSize = getFontSize(n, baseWidth);
+export const getDp = (n: number, baseWidth = 1080) => {
+  const size = getDpWithoutSuffix(n, baseWidth);
 
-  return `${fontSize}px`;
+  return `${size}px`;
 };
