@@ -38,6 +38,7 @@ const ContentWrapper = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
+  padding: 0 2%;
   color: #fff;
   opacity: 0.65;
 `;
