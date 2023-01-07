@@ -173,12 +173,6 @@ export default function ProgressBar() {
 
   return (
     <Wrapper>
-      <Text style={{ position: 'absolute' }}>
-        width: {width}
-        {'\n'}
-        height: {height}
-      </Text>
-
       <Shadow>
         <ContentWrapper>
           <Left>
